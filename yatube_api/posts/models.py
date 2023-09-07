@@ -20,8 +20,8 @@ class Post(models.Model):
     pub_date = models.DateTimeField('Дата публикации', auto_now_add=True)
     image = models.ImageField(
         upload_to='posts/', null=True, blank=True)
-    group = models.ForeignKey(
-        Group, on_delete=models.SET_NULL, blank=True)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE,
+                              related_name='posts', null=True, blank=True)
 
     def __str__(self):
         return self.text
