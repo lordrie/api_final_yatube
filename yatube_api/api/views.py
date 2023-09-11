@@ -1,23 +1,21 @@
 from posts.models import Post, Group
 from .serializers import (PostSerializer, GroupSerializer,
                           CommentSerializer, FollowSerializer)
+from .permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from rest_framework.permissions import (IsAuthenticatedOrReadOnly,
                                         IsAuthenticated)
-from django.shortcuts import get_object_or_404
-from .permissions import OwnerOrReadOnly, GroupOnlyGet
+
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.filters import SearchFilter
-from rest_framework import status
-from rest_framework.exceptions import ValidationError
-from posts.models import Follow
+from django.shortcuts import get_object_or_404
 
 
 class PostViewSet(viewsets.ModelViewSet):
     """Вьюсет для работы с моделью Post."""
     queryset = Post.objects.all()
     serializer_class = PostSerializer
-    permission_classes = (OwnerOrReadOnly, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly)
     pagination_class = LimitOffsetPagination
 
     def perform_create(self, serializer):
@@ -27,7 +25,7 @@ class PostViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     """Вьюсет для работы с моделью Comment."""
     serializer_class = CommentSerializer
-    permission_classes = (OwnerOrReadOnly, IsAuthenticatedOrReadOnly)
+    permission_classes = (IsOwnerOrReadOnly, IsAuthenticatedOrReadOnly)
 
     def get_queryset(self):
         post = get_object_or_404(Post, pk=self.kwargs['post_id'])
@@ -43,7 +41,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для работы с моделью Group."""
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = (GroupOnlyGet,)
+    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class FollowViewSet(viewsets.ModelViewSet):
@@ -56,10 +54,5 @@ class FollowViewSet(viewsets.ModelViewSet):
         return self.request.user.follower.all()
 
     def perform_create(self, serializer):
-        following = serializer.validated_data.get('following')
-        user = self.request.user
-        if user == following:
-            raise ValidationError('Вы не можете подписаться на самого себя.', code=status.HTTP_400_BAD_REQUEST)
-        if Follow.objects.filter(user=user, following=following).exists():
-            raise ValidationError('Вы уже подписаны на этого пользователя.', code=status.HTTP_400_BAD_REQUEST)
-        serializer.save(user=user)
+        """Создает подписку, где подписчиком является текущий пользователь."""
+        serializer.save(user=self.request.user)
