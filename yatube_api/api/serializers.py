@@ -16,6 +16,7 @@ class PostSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
+    """Сериализатор для модели Comment."""
     author = serializers.SlugRelatedField(slug_field='username',
                                           read_only=True)
 
@@ -45,6 +46,8 @@ class FollowSerializer(serializers.ModelSerializer):
         fields = ('id', 'user', 'following')
 
     def validate(self, data):
+        """Проверяет, что пользователь не подписывается на самого себя и
+        не подписывается на одного и того же пользователя более одного раза."""
         user = self.context['request'].user
         following = data.get('following')
         if user == following:

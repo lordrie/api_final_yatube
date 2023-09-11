@@ -32,6 +32,7 @@ class CommentViewSet(viewsets.ModelViewSet):
         return post.comments.all()
 
     def perform_create(self, serializer):
+        """Создает комментарий, связывая его с автором и постом"""
         post_id = self.kwargs['post_id']
         post = get_object_or_404(Post, pk=post_id)
         serializer.save(author=self.request.user, post=post)
@@ -45,6 +46,7 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class FollowViewSet(viewsets.ModelViewSet):
+    """Вьюсет для работы с моделью Follow."""
     serializer_class = FollowSerializer
     permission_classes = (IsAuthenticated,)
     filter_backends = (SearchFilter,)
@@ -54,5 +56,4 @@ class FollowViewSet(viewsets.ModelViewSet):
         return self.request.user.follower.all()
 
     def perform_create(self, serializer):
-        """Создает подписку, где подписчиком является текущий пользователь."""
         serializer.save(user=self.request.user)
