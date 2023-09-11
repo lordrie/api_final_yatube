@@ -91,3 +91,12 @@ python manage.py runserver
         "group": 0
     }
     ```
+3. **Удаление публикации**
+    ```
+    DELETE /api/v1/posts/{post_id}/
+    ```
+
+## Более подробное описание API можно получить по адресу:
+```
+http://localhost:8000/redoc/
+```
