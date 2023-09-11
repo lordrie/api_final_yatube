@@ -55,6 +55,6 @@ python manage.py runserver
 ## Примеры запросов к API
 
 1. **Получение списка всех публикаций**
-    ```
+    ```http
     GET /api/v1/posts/
     ```
