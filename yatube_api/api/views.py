@@ -8,6 +8,9 @@ from django.shortcuts import get_object_or_404
 from .permissions import OwnerOrReadOnly, GroupOnlyGet
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.filters import SearchFilter
+from rest_framework import status
+from rest_framework.exceptions import ValidationError
+from posts.models import Follow
 
 
 class PostViewSet(viewsets.ModelViewSet):
@@ -53,4 +56,10 @@ class FollowViewSet(viewsets.ModelViewSet):
         return self.request.user.follower.all()
 
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        following = serializer.validated_data.get('following')
+        user = self.request.user
+        if user == following:
+            raise ValidationError('Вы не можете подписаться на самого себя.', code=status.HTTP_400_BAD_REQUEST)
+        if Follow.objects.filter(user=user, following=following).exists():
+            raise ValidationError('Вы уже подписаны на этого пользователя.', code=status.HTTP_400_BAD_REQUEST)
+        serializer.save(user=user)
