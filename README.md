@@ -58,23 +58,43 @@ python manage.py runserver
     ```
     GET /api/v1/posts/
     ```
-1. **Добавление нового поста**
+    Пример ответа:
+    ```
+{
+  "count": 123,
+  "next": "http://api.example.org/accounts/?offset=400&limit=100",
+  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
+  "results": [
+    {
+      "id": 0,
+      "author": "string",
+      "text": "string",
+      "pub_date": "2021-10-14T20:41:29.648Z",
+      "image": "string",
+      "group": 0
+    }
+  ]
+}
+    ```
+    
+2. **Добавление нового поста**
     ```
     POST .../api/v1/posts/
 
     {
-        "text": "Мои сокровища? Если они нужны - я дам их вам. Ищите! Я все оставил в одном месте!",
-        "group": 1
+        "text": "string",
+        "image": "string",
+        "group": 0
     }
     ```
     Пример ответа:
     ```
     {
-        "id": 3,
-        "text": "Мои сокровища? Если они нужны - я дам их вам. Ищите! Я все оставил в одном месте!",
-        "author": "roger",
-        "image": null,
-        "group": 1,
-        "pub_date": "2021-06-01T08:47:11.084589Z"
+        "id": 0,
+        "author": "string",
+        "text": "string",
+        "pub_date": "2019-08-24T14:15:22Z",
+        "image": "string",
+        "group": 0
     }
     ```
