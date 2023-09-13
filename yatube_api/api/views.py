@@ -3,8 +3,7 @@ from .serializers import (PostSerializer, GroupSerializer,
                           CommentSerializer, FollowSerializer)
 from .permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
-from rest_framework.permissions import (IsAuthenticatedOrReadOnly,
-                                        IsAuthenticated)
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.filters import SearchFilter
@@ -42,7 +41,6 @@ class GroupViewSet(viewsets.ReadOnlyModelViewSet):
     """Вьюсет для работы с моделью Group."""
     queryset = Group.objects.all()
     serializer_class = GroupSerializer
-    permission_classes = (IsAuthenticatedOrReadOnly,)
 
 
 class FollowViewSet(viewsets.ModelViewSet):
