@@ -8,6 +8,13 @@ API включает в себя возможность получения, со
 * Безопасность: все данные передаются через защищенное соединение, а доступ к определенным функциям контролируется системой аутентификации.
 * Гибкость: API позволяет сторонним разработчикам создавать свои собственные приложения и сервисы на основе данных Yatube.
 
+#### Используемый стек технологий 
+
+- [Python 3.9.10 https://docs.python.org/3.9/]
+- [Django 3.2.16 https://docs.djangoproject.com/en/3.2/]
+- [DRF 3.12.4 https://www.django-rest-framework.org/]
+- [Simple JWT 4.7.2 https://django-rest-framework-simplejwt.readthedocs.io/en/latest/]
+
 ## Как запустить проект:
 
 Клонировать репозиторий и перейти в него в командной строке:
@@ -100,3 +107,7 @@ python manage.py runserver
 ```
 http://localhost:8000/redoc/
 ```
+
+#### Автор
+
+ - [https://github.com/lordrie]
