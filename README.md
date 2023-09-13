@@ -10,10 +10,10 @@ API включает в себя возможность получения, со
 
 #### Используемый стек технологий 
 
-- [Python 3.9.10 https://docs.python.org/3.9/]
-- [Django 3.2.16 https://docs.djangoproject.com/en/3.2/]
-- [DRF 3.12.4 https://www.django-rest-framework.org/]
-- [Simple JWT 4.7.2 https://django-rest-framework-simplejwt.readthedocs.io/en/latest/]
+- [Python 3.9.10](https://docs.python.org/3.9/)
+- [Django 3.2.16](https://docs.djangoproject.com/en/3.2/)
+- [DRF 3.12.4](https://www.django-rest-framework.org/)
+- [Simple JWT 4.7.2](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/)
 
 ## Как запустить проект:
 
